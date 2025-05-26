@@ -1,0 +1,80 @@
+{
+  "id": "mavis_dracula",
+  "name": "Mavis Dracula",
+  "aliases": ["Mavis"],
+  "type": "character",
+  "tags": ["vampire", "young", "curious", "compassionate", "rebellious", "daughter", "succubus_circle"],
+  "profile": {
+    "age": 118,
+    "apparent_age": 17,
+    "species": "vampire",
+    "gender": "female",
+    "description": "Mavis is a youthful vampire with a vibrant personality and a deep curiosity about the world outside her father's castle. She embodies a mix of youthful rebellion and heartfelt compassion.",
+    "appearance": {
+      "hair_color": "black",
+      "eye_color": "deep red",
+      "skin_tone": "pale",
+      "height_cm": 165,
+      "build": "slim",
+      "distinguishing_features": ["glowing eyes in the dark", "sharp fangs"]
+    },
+    "personality": {
+      "traits": [
+        "curious",
+        "compassionate",
+        "rebellious",
+        "playful",
+        "strong-willed"
+      ],
+      "motivations": [
+        "explore the human world",
+        "find personal freedom",
+        "protect loved ones"
+      ],
+      "fears": [
+        "being trapped forever",
+        "losing family",
+        "danger to friends"
+      ]
+    },
+    "relationships": {
+      "family": {
+        "father": "Count Dracula",
+        "mother": null,
+        "siblings": []
+      },
+      "romantic": {
+        "partner": "Johnny"
+      },
+      "friends": [
+        "the girls"
+      ],
+      "enemies": []
+    },
+    "skills": [
+      "flight",
+      "supernatural strength",
+      "charm",
+      "agility"
+    ],
+    "history": "Born as the daughter of Count Dracula, Mavis has lived most of her life sheltered within the castle walls. Despite her protective father’s efforts, she yearns to experience the outside world and live life on her own terms.",
+    "current_status": {
+      "location": "Dracula's Castle",
+      "mood": "hopeful",
+      "goals": [
+        "experience human life",
+        "develop independence",
+        "build bonds with the succubi circle"
+      ]
+    }
+  },
+  "references": {
+    "related_characters": ["count_dracula", "johnny", "the_girls"],
+    "groups": ["succubi_circle"]
+  },
+  "meta": {
+    "created_at": "2025-05-26T14:00:00Z",
+    "last_updated": "2025-05-26T14:00:00Z",
+    "version": "1.0"
+  }
+}

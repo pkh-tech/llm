@@ -1,0 +1,12 @@
+Generate the first scene of a dark fantasy text adventure. Follow these rules:
+
+- Always respond with **only valid JSON**
+- Include a `"description"` field with a short narrative (1-2 sentences)
+- Include an `"options"` array with 2-5 possible player actions
+- Do not add commentary, markdown, or anything outside the JSON
+
+Example format:
+{
+  "description": "You are standing in a moonlit clearing surrounded by ancient trees.",
+  "options": ["Look around", "Walk north", "Sit and wait"]
+}

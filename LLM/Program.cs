@@ -32,46 +32,27 @@ namespace LLM
                 var initState = JsonSerializer.Deserialize<GameState>(initReplyText);
                 DisplayGameState(initState);
 
-                string selection = AskUserInput("> ");
-                string userChoice = HandleSelection(initState, selection);
-                if (userChoice == null) continue;
-
-                if (userChoice.StartsWith("!"))
+                while (true)
                 {
-                    if (userChoice.ToLower() == "!test")
+                    string selection = AskUserInput("> ");
+                    string userChoice = HandleSelection(initState, selection);
+                    if (userChoice == null) continue;
+
+                    if (userChoice.StartsWith("!"))
                     {
-                        string testPrompt = File.ReadAllText("TestPrompt/test.llm");
-                        history.Add(new Message { role = "user", content = testPrompt });
-
-                        string testReplyJson = SendToLlm(history);
-                        string testReplyText = ExtractJson(testReplyJson);
-                        lastRawJson = testReplyText;
-
-                        try
+                        if (userChoice.ToLower() == "!test")
                         {
-                            var testState = JsonSerializer.Deserialize<GameState>(testReplyText);
-                            DisplayGameState(testState);
-
-                            string next = AskUserInput("> ");
-                            string nextChoice = HandleSelection(testState, next);
-                            if (nextChoice != null)
-                                history.Add(new Message { role = "user", content = nextChoice });
-                        }
-                        catch
-                        {
-                            Console.WriteLine("\n[⚠ Could not parse JSON – showing raw reply]\n");
-                            Console.WriteLine(testReplyText + "\n");
+                            RunTestPrompt();
+                            continue;
                         }
 
+                        Console.WriteLine("[!] Unknown command.");
                         continue;
                     }
 
-                    Console.WriteLine("[!] Unknown command.");
-                    continue;
+                    history.Add(new Message { role = "user", content = userChoice });
+                    break;
                 }
-
-                history.Add(new Message { role = "user", content = userChoice });
-
             }
             catch
             {
@@ -86,13 +67,11 @@ namespace LLM
 
                 if (input.ToLower() == "!test")
                 {
-                    string testPrompt = File.ReadAllText("TestPrompt/test.llm");
-                    history.Add(new Message { role = "user", content = testPrompt });
+                    RunTestPrompt();
+                    continue;
                 }
-                else
-                {
-                    history.Add(new Message { role = "user", content = input });
-                }
+
+                history.Add(new Message { role = "user", content = input });
 
                 string replyJson = SendToLlm(history);
                 string replyText = ExtractJson(replyJson);
@@ -103,16 +82,76 @@ namespace LLM
                     var state = JsonSerializer.Deserialize<GameState>(replyText);
                     DisplayGameState(state);
 
-                    string selection = AskUserInput("> ");
-                    string userChoice = HandleSelection(state, selection);
-                    if (userChoice != null)
+                    while (true)
+                    {
+                        string selection = AskUserInput("> ");
+                        string userChoice = HandleSelection(state, selection);
+                        if (userChoice == null) continue;
+
+                        if (userChoice.StartsWith("!"))
+                        {
+                            if (userChoice.ToLower() == "!test")
+                            {
+                                RunTestPrompt();
+                                break;
+                            }
+
+                            Console.WriteLine("[!] Unknown command.");
+                            continue;
+                        }
+
                         history.Add(new Message { role = "user", content = userChoice });
+                        break;
+                    }
                 }
                 catch
                 {
                     Console.WriteLine("\n[⚠ Could not parse JSON – showing raw reply]\n");
                     Console.WriteLine(replyText + "\n");
                 }
+            }
+        }
+
+        static void RunTestPrompt()
+        {
+            string testPrompt = File.ReadAllText("TestPrompt/test.llm");
+            history.Add(new Message { role = "user", content = testPrompt });
+
+            string testReplyJson = SendToLlm(history);
+            string testReplyText = ExtractJson(testReplyJson);
+            lastRawJson = testReplyText;
+
+            try
+            {
+                var testState = JsonSerializer.Deserialize<GameState>(testReplyText);
+                DisplayGameState(testState);
+
+                while (true)
+                {
+                    string next = AskUserInput("> ");
+                    string nextChoice = HandleSelection(testState, next);
+                    if (nextChoice == null) continue;
+
+                    if (nextChoice.StartsWith("!"))
+                    {
+                        if (nextChoice.ToLower() == "!test")
+                        {
+                            RunTestPrompt();
+                            return;
+                        }
+
+                        Console.WriteLine("[!] Unknown command.");
+                        continue;
+                    }
+
+                    history.Add(new Message { role = "user", content = nextChoice });
+                    break;
+                }
+            }
+            catch
+            {
+                Console.WriteLine("\n[⚠ Could not parse JSON – showing raw reply]\n");
+                Console.WriteLine(testReplyText + "\n");
             }
         }
 
@@ -163,26 +202,18 @@ namespace LLM
             input = input.Trim();
 
             if (input.StartsWith("!"))
-            {
-                // Specialkommando – håndteres i while-loop
                 return input;
-            }
 
             if (input.ToLower() == "m")
-            {
                 return AskUserInput("Your input: ");
-            }
 
             if (int.TryParse(input, out int choice) &&
                 choice >= 1 && choice <= state.Options.Count)
-            {
                 return state.Options[choice - 1];
-            }
 
             Console.WriteLine("[!] Invalid input.");
             return null;
         }
-
 
         static string SendToLlm(List<Message> fullHistory)
         {

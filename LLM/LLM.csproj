@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Character\Mavis.llm" />
     <None Include="Game\GameStart.llm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

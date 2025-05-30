@@ -75,25 +75,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\GameEngine.cs" />
+    <Compile Include="Core\PromptRunner.cs" />
+    <Compile Include="Models\ChatRequest.cs" />
+    <Compile Include="Models\ChatResponse.cs" />
+    <Compile Include="Models\GameState.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\HttpUtils.cs" />
+    <Compile Include="Utils\JsonUtils.cs" />
+    <Compile Include="Utils\LlmUtils.cs" />
+    <Compile Include="Utils\SelectionHandler.cs" />
+    <Compile Include="Utils\UiHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Character\Mavis.llm" />
-    <None Include="Game\GameStart.llm">
+    <None Include="Custom\Character\Mavis.llm" />
+    <None Include="Custom\Game\GameStart.llm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Game\StartArea.llm">
+    <None Include="Custom\Game\StartArea.llm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
-    <None Include="System\init.llm">
+    <None Include="Custom\System\init.llm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="TestPrompt\test.llm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

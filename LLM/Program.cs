@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -17,9 +18,9 @@ namespace LLM
 
         static void Main()
         {
-            history.Add(new Message { role = "system", content = File.ReadAllText("System/init.llm") });
-            history.Add(new Message { role = "system", content = File.ReadAllText("Game/startArea.llm") });
-            history.Add(new Message { role = "user", content = File.ReadAllText("Game/GameStart.llm") });
+            history.Add(new Message { role = "system", content = File.ReadAllText("Custom/System/init.llm") });
+            history.Add(new Message { role = "system", content = File.ReadAllText("Custom/Game/startArea.llm") });
+            history.Add(new Message { role = "user", content = File.ReadAllText("Custom/Game/GameStart.llm") });
 
             Console.WriteLine("Type 'exit' to quit.\n");
 
@@ -321,5 +322,22 @@ namespace LLM
 
         [JsonPropertyName("options")]
         public List<string> Options { get; set; }
+    }
+}
+*/
+using System;
+using System.Collections.Generic;
+using LLM.Core;
+using LLM.Models;
+
+namespace LLM
+{
+    class Program
+    {
+        static void Main()
+        {
+            var engine = new GameEngine();
+            engine.Run();
+        }
     }
 }
